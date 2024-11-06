@@ -1,7 +1,7 @@
 module ActsAsCsv
 
-  def self.include(base)
-    ase.extend ClassMethods
+  def self.included(base)
+    base.extend ClassMethods
   end
 
   module ClassMethods
@@ -14,12 +14,13 @@ module ActsAsCsv
 
     def read
       @csv_contents = []
-      filename = self.class.to_s.downcase + '.txt'
+      filename = self.class.to_s.downcase + '.csv'
+      puts filename
       file = File.new(filename)
-      @headers = file.gets.chomp.split('. ')
+      @headers = file.gets.chomp.split(', ')
 
       file.each do |row|
-        @csv_contents << row.chomp.split('. ')
+        @csv_contents << row.chomp.split(', ')
       end
     end
 
